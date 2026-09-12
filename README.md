@@ -5,7 +5,7 @@ Phase 1:  Data Encryption: Implementing Data Encryption in a Secure Communicatio
 
 **Python 3**, with `pycryptodome` (the `Crypto` module) for encryption and
 the standard `socket` module for networking.
-
+**html and css** for chat page styling
 ## 2. Secure communication channel design
 
 **Hybrid RSA + AES** encryption — the same principle TLS/HTTPS uses:
@@ -31,11 +31,19 @@ decrypts with priv_key RSA
   transit fails to decrypt instead of silently corrupting.
 
 Files:
-- `netutils.py` — length-prefixed message framing over the socket
-- `server.py` — generates the RSA keys, runs the handshake, encrypts/decrypts
-- `client.py` — receives the public key, generates and sends the session key
+```
+config.py        shared settings (host, ports, secret key)
+crypto_core.py      AES-EAX encrypt/decrypt — the shared engine
+netutils.py          length-prefixed message framing over TCP
+server.py            the chat server
+client.py            terminal chat client
+web_client.py         Flask web client (same handshake, browser UI is is the intended target for a web vulnerability scan
+                      (e.g. OWASP ZAP) — it has pages, a form, and a session, unlike the raw socket server.)
+templates/chat.html   chat page
+static/style.css      chat page styling
+```
 
-## 3. Installation
+## 3. Getting started
 
 ### note: On recent Debian/Ubuntu, running `pip install pycryptodome` directly raises:
 
@@ -54,20 +62,33 @@ sudo apt update && sudo apt install python3-venv
 python3 -m venv venv
 source venv/bin/activate
 pip install pycryptodome
+pip install -r requirements.txt
 ```
 
-## 4. Testing
+## 4. Running it
 
+### Method 1:
+
+**Terminal chat:**
 1. Terminal 1: `python server.py`
 2. Terminal 2: `python client.py`
 3. Type messages on both sides and confirm they display correctly for
    the recipient.
+   
+### Method 2 (recommanded):
 
-**To prove it's actually encrypted**:
+**Web chat:**
+```bash
+python server.py      # terminal 1
+python web_client.py  # terminal 2
+```
+Then open `http://127.0.0.1:5000`.
+
+**Validating the channel**:
 - Capture the traffic with Wireshark, filter on `tcp.port == 5050`,
   and inspect the packet contents — it should be unreadable bytes, never
   the plaintext message.
-- On WSL2, run the capture *inside* WSL (`sudo wireshark`), since loopback
+- On WSL2, run the capture *inside* WSL (`sudo wireshark`), since any
   traffic never reaches a Windows-side network interface.
 - To demonstrate AES-EAX's integrity check:
   flip a byte in the ciphertext before calling `decrypt_and_verify` and show it raises `ValueError`
