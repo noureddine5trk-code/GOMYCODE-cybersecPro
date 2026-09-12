@@ -1,6 +1,6 @@
 """
-client.py — Étape 2 de la consigne : canal de communication sécurisé (côté client)
-Voir server.py pour le détail du principe (chiffrement hybride RSA + AES).
+client.py — secure communication channel (client-side)
+See server.py for details on the underlying principle (RSA + AES hybrid encryption).
 """
 import socket
 import threading
@@ -11,21 +11,21 @@ from Crypto.Random import get_random_bytes
 
 from netutils import send_msg, recv_msg
 
-HOST = "127.0.0.1"  # remplace par l'IP du serveur si ce n'est pas la même machine
+HOST = "127.0.0.1"  # Replace with the server's IP address if it is not the same machine.
 PORT = 5050
 
 
 def do_handshake(sock: socket.socket) -> bytes:
     public_key_pem = recv_msg(sock)
     public_key = RSA.import_key(public_key_pem)
-    print("[+] Clé publique RSA du serveur reçue")
+    print("[+] Server's RSA public key received")
 
     session_key = get_random_bytes(32)  # clé AES-256 aléatoire
 
     cipher_rsa = PKCS1_OAEP.new(public_key)
     encrypted_session_key = cipher_rsa.encrypt(session_key)
     send_msg(sock, encrypted_session_key)
-    print("[+] Clé de session AES envoyée (chiffrée en RSA)")
+    print("[+] AES session key sent (RSA-encrypted)")
 
     return session_key
 
@@ -47,19 +47,19 @@ def receive_loop(sock: socket.socket, session_key: bytes) -> None:
         try:
             packet = recv_msg(sock)
         except ConnectionError:
-            print("\n[!] Serveur déconnecté")
+            print("\n[!] Server disconnected")
             break
         try:
             message = decrypt_message(session_key, packet)
             print(f"\nServeur> {message.decode()}\nClient> ", end="", flush=True)
         except ValueError:
-            print("\n[!] ALERTE : message rejeté (intégrité invalide, possible altération)")
+            print("\n[!] ALERT: message rejected (invalid integrity, possible tampering)")
 
 
 def main() -> None:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((HOST, PORT))
-    print(f"[+] Connecté au serveur {HOST}:{PORT}")
+    print(f"[+] Connected to the server {HOST}:{PORT}")
 
     session_key = do_handshake(sock)
 
