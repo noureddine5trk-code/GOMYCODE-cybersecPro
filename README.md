@@ -37,8 +37,8 @@ crypto_core.py      AES-EAX encrypt/decrypt — the shared engine
 netutils.py          length-prefixed message framing over TCP
 server.py            the chat server
 client.py            terminal chat client
-web_client.py         Flask web client (same handshake, browser UI is is the intended target for a web vulnerability scan
-                      (e.g. OWASP ZAP) — it has pages, a form, and a session, unlike the raw socket server.)
+web_client.py         Flask web client (same handshake, browser UI is the intended target for a web vulnerability scan
+                      (OWASP ZAP))
 templates/chat.html   chat page
 static/style.css      chat page styling
 ```
