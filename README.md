@@ -3,9 +3,9 @@ Phase 1:  Data Encryption: Implementing Data Encryption in a Secure Communicatio
 
 ## 1. Language / framework
 
-**Python 3**, with `pycryptodome` (the `Crypto` module) for encryption and
+- **Python 3**, with `pycryptodome` (the `Crypto` module) for encryption and
 the standard `socket` module for networking.
-**html and css** for chat page styling
+- **html and css** for chat page styling
 ## 2. Secure communication channel design
 
 **Hybrid RSA + AES** encryption — the same principle TLS/HTTPS uses:
