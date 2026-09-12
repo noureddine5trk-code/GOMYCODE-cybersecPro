@@ -1,8 +1,5 @@
 /* Secure Channel — visual identity
-   A sealed-correspondence feel for an encrypted chat: a serif mark for
-   the brand, monospace for the actual message content (it's literally
-   plaintext recovered from ciphertext), and a brass accent standing in
-   for a wax seal rather than the usual dark-mode neon-green "hacker" look.
+   A sealed-correspondence feel for an encrypted chat.
 */
 
 :root {
