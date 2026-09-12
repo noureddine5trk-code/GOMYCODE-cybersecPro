@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Channel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <svg class="app__seal" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="12" cy="15" r="1.6" fill="currentColor"/>
+      </svg>
+      <div>
+        <p class="app__title">Secure Channel</p>
+        <p class="app__subtitle">Messages are encrypted with AES, using a session key exchanged over RSA.</p>
+      </div>
+    </header>
+
+    <section class="log" id="log">
+      {% if not messages %}
+        <p class="log__empty">No messages yet. Send one below — it will be encrypted before it leaves this page.</p>
+      {% else %}
+        {% for m in messages %}
+          <div class="row row--{{ m.sender }}">
+            <p class="row__meta"><span>{{ 'You' if m.sender == 'you' else 'Server' }}</span><span>{{ m.time }}</span></p>
+            <div class="bubble">{{ m.text }}</div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </section>
+
+    <form class="composer" method="POST" action="/send">
+      <input type="text" name="message" placeholder="Type a message..." autofocus autocomplete="off">
+      <button type="submit">Send</button>
+    </form>
+  </main>
+
+  <script>
+    const log = document.getElementById('log');
+    log.scrollTop = log.scrollHeight;
+  </script>
+</body>
+</html>
