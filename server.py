@@ -1,5 +1,5 @@
 """
-server.py — the encrypted chat server (Phase 1).
+server.py — the encrypted chat server.
 
 Hybrid RSA + AES encryption:
   1. The server generates an RSA key pair and sends its PUBLIC key to
