@@ -90,6 +90,3 @@ Then open `http://127.0.0.1:5000`.
   the plaintext message.
 - On WSL2, run the capture *inside* WSL (`sudo wireshark`), since any
   traffic never reaches a Windows-side network interface.
-- To demonstrate AES-EAX's integrity check:
-  flip a byte in the ciphertext before calling `decrypt_and_verify` and show it raises `ValueError`
-  instead of returning corrupted plaintext.
