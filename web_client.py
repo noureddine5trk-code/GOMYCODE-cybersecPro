@@ -1,19 +1,8 @@
 """
-web_client.py — web bridge for the encrypted chat (Phase 2 target).
+web_client.py — web bridge for the encrypted chat.
 
-Zed Attack Proxy scans web applications; server.py speaks raw TCP, so
-there is nothing for it to scan there. This module exposes the exact
-same client handshake as client.py, but through a browser instead of a
-terminal — turning the project into a real web target without touching
-the encryption itself.
-
-server.py is completely unaware of the difference: it doesn't know or
-care whether the other end is a terminal or a browser.
-
-This is a small, intentionally un-hardened Flask app (no CSRF
-protection, no custom security headers, a hardcoded fallback secret
-key). Auditing and fixing exactly those gaps is the point of Phase 3 —
-they are not artificially injected, just not yet addressed.
+This module exposes the exact same client handshake as client.py, but through a browser instead of a terminal.
+This is a small, intentionally un-hardened Flask app
 """
 import socket
 import threading
