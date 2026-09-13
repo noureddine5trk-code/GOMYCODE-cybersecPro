@@ -83,6 +83,7 @@ python server.py      # terminal 1
 python web_client.py  # terminal 2
 ```
 Then open `http://127.0.0.1:5000`.
+![Aperçu de l'application](preview.png)
 
 **Validating the channel**:
 - Capture the traffic with Wireshark, filter on `tcp.port == 5050`,
