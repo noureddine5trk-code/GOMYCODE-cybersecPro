@@ -1,5 +1,5 @@
 """
-client.py — terminal client for the encrypted chat (Phase 1).
+client.py — terminal client for the encrypted chat.
 
 See server.py for the full explanation of the handshake and encryption
 scheme (hybrid RSA + AES). web_client.py implements the exact same
