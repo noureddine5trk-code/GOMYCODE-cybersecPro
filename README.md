@@ -71,8 +71,14 @@ pip install -r requirements.txt
 
 **Terminal chat:**
                
-1. Terminal 1: ```python server.py```bash
-2. Terminal 2: ```python client.py```bash
+1. Terminal 1:
+ ```bash  
+   python server.py
+ ```
+2. Terminal 2:
+  ```bash
+   python client.py
+  ```
 3. Type messages on both sides and confirm they display correctly for
    the recipient.
    
@@ -81,6 +87,8 @@ pip install -r requirements.txt
 **Web chat:**
 ```bash
 python server.py      # terminal 1
+```
+```bash
 python web_client.py  # terminal 2
 ```
 Then open `http://127.0.0.1:5000`.
