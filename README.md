@@ -10,7 +10,7 @@ the standard `socket` module for networking.
 
 **Hybrid RSA + AES** encryption — the same principle TLS/HTTPS uses:
 
-```
+`
 Server                                  Client
 ------                                  ------
 generates (pub_key, priv_key) RSA
@@ -22,7 +22,7 @@ decrypts with priv_key RSA
    ⇒ both sides now share the same AES session_key
 
   ◄════ AES-EAX encrypted messages ════►   (both directions)
-```
+`
 
 - **RSA** is used only once, to exchange the AES key securely (asymmetric
   encryption — slow, but no need to share a secret in advance).
@@ -31,7 +31,7 @@ decrypts with priv_key RSA
   transit fails to decrypt instead of silently corrupting.
 
 Files:
-```
+`
 config.py             shared settings (host, ports, secret key)
 crypto_core.py        AES-EAX encrypt/decrypt — the shared engine
 netutils.py           length-prefixed message framing over TCP
@@ -41,7 +41,7 @@ web_client.py         Flask web client (same handshake, browser UI is the intend
                       (OWASP ZAP))
 templates/chat.html   chat page
 static/style.css      chat page styling
-```
+`
 
 ## 3. Getting started
 
